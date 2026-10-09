@@ -12,8 +12,7 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "typecheck": "tsc --noEmit",
-    "check-links": "node scripts/check-links.mjs"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@mdx-js/react": "^2.3.0",

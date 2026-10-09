@@ -2,8 +2,6 @@
 
 Incremental build plan for the Gatsby 5 + TypeScript + Tailwind rebuild of www.rssoftware.com. Each task is one commit. Run them in order, in Claude Code or Cursor, by pasting the task's prompt.
 
-> **Migration note (Oct 2026):** the approved static site is being migrated into this repo as it is (`docs/MIGRATION.md`). For every page the static site already has, the migration replaces the mockup-based prompt below: T001, T002 and T005 are covered by migration Part 1; T006–T007 by Part 2; T008–T009 and T013–T016 by Part 3; T004, T010–T012 and T017–T019 by Part 4.
-
 ## How to use
 
 1. Start a fresh session per task. Paste the **Prompt** block of the task.
