@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RS Software — Design System</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Radio+Canada+Big:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=Source+Serif+4:wght@400;600&family=Outfit:wght@400;500;700&family=Arimo:wght@400;600;700&family=Noto+Sans:wght@400;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --page-bg:#eef1f4;
+    --page-panel:#ffffff;
+    --page-fg:#0a0a0a;
+    --page-fg-soft:#5b6472;
+    --page-line:#e2e6ea;
+    --code-bg:#0b1f3a;
+    --code-fg:#dbe7f5;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--page-bg);
+    color:var(--page-fg);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{max-width:100%;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px 120px;}
+
+  /* ---------- top meta-nav ---------- */
+  .metanav{
+    position:sticky; top:0; z-index:50;
+    background:var(--page-panel);
+    border-bottom:1px solid var(--page-line);
+  }
+  .metanav-inner{
+    max-width:1180px;margin:0 auto;padding:0 24px;
+    height:64px;display:flex;align-items:center;gap:28px;
+    overflow-x:auto;
+  }
+  .metanav-brand{
+    font-family:'Radio Canada Big',sans-serif;font-weight:700;font-size:15px;
+    color:var(--page-fg); white-space:nowrap; letter-spacing:.01em;
+  }
+  .metanav-brand span{color:#0075b7;}
+  .ver-badge{
+    display:inline-block; margin-left:8px; font-family:'JetBrains Mono',monospace;
+    font-size:10.5px; font-weight:600; color:#1e72bd; background:#e6f7f6;
+    border-radius:999px; padding:2px 8px; vertical-align:2px;
+  }
+  .metanav a{
+    font-family:'Radio Canada Big',sans-serif;font-size:14px;font-weight:500;
+    color:var(--page-fg-soft); text-decoration:none; white-space:nowrap;
+  }
+  .metanav a:hover{color:#0075b7;}
+
+  /* ---------- hero (demonstrates the site's own giant-header signature) ---------- */
+  .hero{
+    padding:72px 24px 40px; text-align:center;
+    background:var(--page-panel);
+    border-bottom:1px solid var(--page-line);
+  }
+  .hero-eyebrow{
+    font-family:'Radio Canada Big',sans-serif; font-weight:700; font-size:13px;
+    letter-spacing:.14em; text-transform:uppercase; color:#1e72bd; margin:0 0 18px;
+  }
+  .hero h1{
+    font-family:'Inter',sans-serif; font-weight:900;
+    font-size:clamp(48px,9vw,140px); line-height:.94; letter-spacing:-0.03em;
+    margin:0; color:var(--page-fg);
+  }
+  .hero p{
+    max-width:620px;margin:22px auto 0; font-size:17px; line-height:1.65;
+    color:var(--page-fg-soft);
+  }
+
+  /* ---------- section shell ---------- */
+  section.block{padding:64px 0 8px;border-bottom:1px solid var(--page-line);}
+  section.block:last-of-type{border-bottom:0;}
+  .kicker{
+    font-family:'Radio Canada Big',sans-serif;font-weight:700;font-size:12.5px;
+    letter-spacing:.14em;text-transform:uppercase;color:#1e72bd;margin:0 0 10px;
+  }
+  .block h2{
+    font-family:'Radio Canada Big',sans-serif; font-weight:700;
+    font-size:clamp(26px,3vw,38px); letter-spacing:-0.02em; color:var(--page-fg);
+    margin:0 0 14px;
+  }
+  .accent-bar{width:56px;height:4px;border-radius:2px;background:linear-gradient(90deg,#1e72bd 0%,#14b8a6 100%);margin-bottom:28px;}
+  .block > p.lede{font-size:16px;line-height:1.7;color:var(--page-fg-soft);max-width:720px;margin:0 0 36px;}
+
+  /* ---------- swatch grid ---------- */
+  .swgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:40px;}
+  .sw{
+    border-radius:14px;overflow:hidden;border:1px solid var(--page-line);
+    background:var(--page-panel); cursor:pointer; transition:transform .12s;
+  }
+  .sw:hover{transform:translateY(-2px);}
+  .sw-fill{height:74px;}
+  .sw-body{padding:12px 14px;}
+  .sw-name{font-family:'Radio Canada Big',sans-serif;font-weight:600;font-size:13.5px;margin:0 0 3px;color:var(--page-fg);}
+  .sw-hex{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--page-fg-soft);margin:0 0 2px;}
+  .sw-use{font-size:11.5px;color:var(--page-fg-soft);margin:0;line-height:1.4;}
+  .sw-copied{color:#0d9488 !important;font-weight:600;}
+
+  .grp-label{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--page-fg-soft);margin:0 0 12px;}
+
+  /* ---------- type specimens ---------- */
+  .type-role{
+    display:grid; grid-template-columns:200px 1fr; gap:24px; align-items:baseline;
+    padding:22px 0; border-top:1px solid var(--page-line);
+  }
+  .type-role:first-of-type{border-top:0;}
+  .type-role .meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--page-fg-soft);line-height:1.6;}
+  .type-role .meta b{display:block;font-family:'Radio Canada Big',sans-serif;font-size:14px;color:var(--page-fg);font-weight:600;margin-bottom:4px;}
+  .specimen-ui{font-family:'Radio Canada Big',sans-serif;font-size:26px;color:var(--page-fg);}
+  .specimen-body{font-family:'Inter',sans-serif;font-size:18px;color:var(--page-fg);line-height:1.6;}
+  .specimen-display{font-family:'Inter',sans-serif;font-weight:800;font-size:30px;letter-spacing:-0.02em;color:var(--page-fg);}
+  .specimen-serif{font-family:'Source Serif 4',Georgia,serif;font-size:20px;color:var(--page-fg);letter-spacing:-0.02em;}
+  .specimen-mono{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--page-fg);}
+  .specimen-toc{font-family:'Outfit',sans-serif;font-size:18px;color:var(--page-fg);}
+  .specimen-testi{font-family:'Arimo',Arial,sans-serif;font-size:16px;color:var(--page-fg);}
+  .specimen-legal{font-family:'Noto Sans',sans-serif;font-size:14px;color:var(--page-fg-soft);}
+
+  /* ---------- giant header showcase ---------- */
+  .ghdr-card{
+    border-radius:20px; overflow:hidden; margin-bottom:20px; border:1px solid var(--page-line);
+  }
+  .ghdr-light{background:#fff;padding:44px 24px;text-align:center;}
+  .ghdr-light h3{
+    font-family:'Inter',sans-serif;font-weight:900;color:#1a1a1a;
+    font-size:clamp(40px,8vw,96px);line-height:1;letter-spacing:-0.03em;margin:0;
+  }
+  .ghdr-dark{background:linear-gradient(180deg,#0075b7 0%,#0b2545 100%);padding:44px 24px;text-align:center;}
+  .ghdr-dark h3{
+    font-family:'Inter',sans-serif;font-weight:900;color:#fff;
+    font-size:clamp(40px,8vw,96px);line-height:1;letter-spacing:-0.03em;margin:0;
+    text-shadow:0 2px 40px rgba(0,90,140,0.35);
+  }
+  .ghdr-spec{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--page-fg-soft);
+    background:var(--page-panel);border:1px solid var(--page-line);border-radius:10px;
+    padding:14px 16px;margin-bottom:36px;line-height:1.8;overflow-x:auto;
+  }
+
+  /* ---------- section-heading pattern demo ---------- */
+  .demo-panel{background:var(--page-panel);border:1px solid var(--page-line);border-radius:16px;padding:36px;margin-bottom:36px;}
+  .sh-eyebrow{font-family:'Radio Canada Big',sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#1e72bd;margin:0 0 10px;}
+  .sh-title{font-family:'Radio Canada Big',sans-serif;font-weight:700;font-size:clamp(24px,3vw,38px);line-height:1.15;letter-spacing:-0.02em;color:#0b1f3a;margin:0;}
+  .sh-title em{color:#0075b7;font-style:normal;}
+  .sh-bar{width:56px;height:4px;border-radius:2px;background:linear-gradient(90deg,#1e72bd 0%,#14b8a6 100%);margin-top:12px;}
+
+  /* ---------- layout diagram ---------- */
+  .layout-table{width:100%;border-collapse:collapse;margin-bottom:36px;font-size:14px;}
+  .layout-table th,.layout-table td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--page-line);}
+  .layout-table th{font-family:'Radio Canada Big',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--page-fg-soft);font-weight:600;}
+  .layout-table td:first-child{font-family:'JetBrains Mono',monospace;color:#0075b7;white-space:nowrap;}
+  .layout-table td{color:var(--page-fg);}
+
+  /* ---------- radius / shadow swatches ---------- */
+  .rswrap{display:flex;flex-wrap:wrap;gap:22px;margin-bottom:40px;}
+  .rsw{text-align:center;}
+  .rsw-box{width:84px;height:84px;background:#0075b7;margin-bottom:8px;}
+  .rsw span{display:block;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--page-fg-soft);}
+
+  .shwrap{display:flex;flex-wrap:wrap;gap:26px;margin-bottom:40px;}
+  .shw{text-align:center;}
+  .shw-box{width:110px;height:84px;background:#fff;border-radius:14px;margin-bottom:10px;}
+  .shw span{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--page-fg-soft);max-width:130px;}
+
+  /* ---------- gradient swatches ---------- */
+  .gwrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-bottom:40px;}
+  .gsw{border-radius:14px;overflow:hidden;border:1px solid var(--page-line);}
+  .gsw-fill{height:70px;}
+  .gsw-body{padding:11px 14px;background:var(--page-panel);}
+  .gsw-name{font-family:'Radio Canada Big',sans-serif;font-weight:600;font-size:13px;color:var(--page-fg);margin:0 0 3px;}
+  .gsw-code{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--page-fg-soft);margin:0;word-break:break-all;}
+
+  /* ---------- buttons demo ---------- */
+  .btnrow{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-bottom:14px;}
+  .btn-primary{background:#0075b7;color:#fff;border:0;border-radius:10px;padding:12px 20px;font-family:'JetBrains Mono',monospace;font-weight:500;font-size:14px;cursor:pointer;}
+  .btn-primary:hover{background:#005a8e;}
+  .btn-gradient{background:linear-gradient(134deg,#0075b7,#14b8a6);color:#fff;border:0;border-radius:9px;padding:14px 30px;font-family:'Radio Canada Big',sans-serif;font-weight:700;font-size:15px;cursor:pointer;}
+  .btn-outline{background:#fff;color:#0075b7;border:1px solid #0075b7;border-radius:9px;padding:13px 29px;font-family:'Radio Canada Big',sans-serif;font-weight:700;font-size:15px;cursor:pointer;}
+  .btn-dashed{border:1px dashed #000;border-radius:16px;padding:16px 24px;font-family:'Radio Canada Big',sans-serif;font-weight:500;font-size:14px;color:#000;background:transparent;}
+  .btn-caption{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--page-fg-soft);margin:0 0 30px;}
+
+  /* ---------- card demos ---------- */
+  .cardrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-bottom:16px;}
+  .demo-testi{background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:16px;padding:32px;position:relative;overflow:hidden;box-shadow:0px 1px 3px 0px rgba(0,0,0,0.1),0px 1px 2px -1px rgba(0,0,0,0.1);}
+  .demo-testi::before{content:"";position:absolute;inset:0;opacity:.03;background-image:linear-gradient(141deg,rgb(92,197,191) 0%,rgb(0,117,183) 100%);}
+  .demo-testi p.q{font-family:'Arimo',Arial,sans-serif;font-size:15px;color:#000;position:relative;margin:0 0 22px;line-height:1.5;}
+  .demo-testi .who{display:flex;gap:10px;align-items:center;position:relative;}
+  .demo-testi .dot{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#5cc5bf,#0075b7);flex-shrink:0;}
+  .demo-testi .name{font-family:'Arimo',Arial,sans-serif;font-weight:600;font-size:13.5px;color:#000;margin:0;}
+  .demo-testi .role{font-family:'Arimo',Arial,sans-serif;font-size:12px;color:rgba(0,0,0,.5);margin:0;}
+
+  .demo-job{background:#fff;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:16px;box-shadow:0 0 0 1px rgba(0,0,0,0.05),0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -4px rgba(0,0,0,0.1);}
+  .demo-job .jt{font-family:'Radio Canada Big',sans-serif;font-weight:500;font-size:18px;color:#000;margin:0;}
+  .demo-job .jm{font-family:'JetBrains Mono',monospace;font-size:13px;color:#6c6c6c;margin:4px 0 0;}
+  .demo-job .jd{font-family:'Source Serif 4',Georgia,serif;font-size:16px;color:#000;line-height:1.4;margin:0;}
+  .demo-job .jb{align-self:flex-start;background:#0075b7;color:#fff;border:0;border-radius:10px;padding:10px 16px;font-family:'JetBrains Mono',monospace;font-weight:500;font-size:13px;}
+
+  .demo-stat .val{font-family:'Radio Canada Big',sans-serif;font-weight:700;font-size:34px;letter-spacing:-0.5px;color:#2563eb;margin-bottom:8px;}
+  .demo-stat .lab{font-family:'Radio Canada Big',sans-serif;font-weight:700;font-size:15px;color:#0b2545;margin-bottom:6px;}
+  .demo-stat .desc{font-family:'Inter',sans-serif;font-size:13.5px;color:#3f4a5a;line-height:1.5;}
+  .demo-statbar{border-radius:20px;padding:34px 30px;background:linear-gradient(90deg,#e6fbf8 0%,#e7dff7 100%);display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:28px;margin-bottom:40px;}
+
+  /* ---------- nav / footer demos ---------- */
+  .demo-nav{background:#fff;border-radius:0 0 20px 20px;border:1px solid rgba(0,0,0,.06);border-top:0;padding:0 28px;height:64px;display:flex;align-items:center;gap:26px;margin-bottom:40px;overflow-x:auto;}
+  .demo-nav .lg{font-family:'Radio Canada Big',sans-serif;font-weight:700;font-size:15px;color:#0b2545;margin-right:8px;white-space:nowrap;}
+  .demo-nav a{font-family:'Radio Canada Big',sans-serif;font-size:14.5px;color:#0075b7;text-decoration:none;padding:6px 2px;border-bottom:2px solid transparent;white-space:nowrap;}
+  .demo-nav a.active{font-weight:700;border-bottom:2px solid #5cc5bf;}
+
+  .demo-footer{background:#1e72bd;border-radius:16px;padding:36px 32px 0;overflow:hidden;margin-bottom:16px;}
+  .demo-footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:24px;padding-bottom:28px;}
+  .demo-footer .colhead{font-family:'Radio Canada Big',sans-serif;font-weight:700;font-size:13px;color:#fff;margin:0 0 12px;}
+  .demo-footer .colitem{font-family:'Radio Canada Big',sans-serif;font-size:12.5px;color:rgba(255,255,255,.85);margin:0 0 9px;}
+  .demo-footer .bar{background:#fff;margin:0 -32px;padding:14px 32px;display:flex;justify-content:space-between;font-family:'Noto Sans',sans-serif;font-size:11.5px;color:#6b7280;}
+
+  /* ---------- token dump ---------- */
+  pre.tokens{
+    background:var(--code-bg);color:var(--code-fg);border-radius:14px;padding:26px 28px;
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.75;overflow-x:auto;
+    margin-bottom:40px;
+  }
+  pre.tokens .c{color:#6b93b8;}
+  pre.tokens .v{color:#8fd6c7;}
+
+  /* ---------- rules checklist ---------- */
+  .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-bottom:20px;}
+  .rule{border:1px solid var(--page-line);border-radius:14px;padding:20px 22px;background:var(--page-panel);}
+  .rule h4{font-family:'Radio Canada Big',sans-serif;font-size:14.5px;font-weight:700;margin:0 0 8px;color:var(--page-fg);}
+  .rule p{font-size:13.5px;line-height:1.55;color:var(--page-fg-soft);margin:0;}
+
+  .foot-note{text-align:center;padding:50px 24px 10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--page-fg-soft);}
+
+  ::-webkit-scrollbar{height:6px;width:6px;}
+  ::-webkit-scrollbar-thumb{background:#c8ccd2;border-radius:3px;}
+</style>
+</head>
+<body>
+
+<nav class="metanav">
+  <div class="metanav-inner">
+    <span class="metanav-brand">RS<span>·</span>SOFTWARE — DESIGN SYSTEM <span class="ver-badge">v3</span></span>
+    <a href="#colors">Colors</a>
+    <a href="#type">Typography</a>
+    <a href="#headlines">Headlines</a>
+    <a href="#layout">Layout</a>
+    <a href="#components">Components</a>
+    <a href="#tokens">Tokens</a>
+    <a href="#rules">Rules</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <p class="hero-eyebrow">Reference guide</p>
+  <h1>DESIGN&nbsp;SYSTEM</h1>
+  <p>Every color, typeface, spacing value and component pattern that defines the RS Software look — one place to reference before designing anything new.</p>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ COLORS ============ -->
+  <section class="block" id="colors">
+    <p class="kicker">01 — Palette</p>
+    <h2>Colors</h2>
+    <div class="accent-bar"></div>
+    <p class="lede">One confident primary blue, a teal for "active" states, a deeper navy as a rare second accent, and a restrained neutral scale for everything else. Click any swatch to copy its hex.</p>
+
+    <p class="grp-label">Brand core</p>
+    <div class="swgrid" id="grp-brand"></div>
+
+    <p class="grp-label">Neutrals &amp; text</p>
+    <div class="swgrid" id="grp-neutral"></div>
+
+    <p class="grp-label">Product accent set (used for icon tiles &amp; dropdown hovers only — never as page-wide colors)</p>
+    <div class="swgrid" id="grp-product"></div>
+  </section>
+
+  <!-- ============ TYPOGRAPHY ============ -->
+  <section class="block" id="type">
+    <p class="kicker">02 — Typography</p>
+    <h2>Type system</h2>
+    <div class="accent-bar"></div>
+    <p class="lede">Six typefaces, each with exactly one job. Nothing is picked "because it looks nice" — every family maps to a specific role, and that mapping is what makes the site feel consistent across very different page types.</p>
+
+    <div class="type-role">
+      <div class="meta"><b>Radio Canada Big</b>UI layer<br>400 / 500 / 600 / 700</div>
+      <div class="specimen-ui">Navigation, buttons, section titles, job card names</div>
+    </div>
+    <div class="type-role">
+      <div class="meta"><b>Inter</b>Body + Display<br>400–900</div>
+      <div class="specimen-body">Editorial body copy at 400–500, and at 800–900 it becomes the giant hero headline face.</div>
+    </div>
+    <div class="type-role">
+      <div class="meta"><b>Inter 800/900</b>Display extreme<br>letter-spacing −0.03em</div>
+      <div class="specimen-display">CAREERS · CONTACT US · RS INSIGHTS</div>
+    </div>
+    <div class="type-role">
+      <div class="meta"><b>Source Serif 4</b>Editorial<br>400 / 600</div>
+      <div class="specimen-serif">Long-form article copy and job-listing descriptions read as serif — a deliberate contrast to the sans UI around them.</div>
+    </div>
+    <div class="type-role">
+      <div class="meta"><b>Geist Mono / JetBrains Mono</b>Meta &amp; labels<br>400 / 500</div>
+      <div class="specimen-mono">Full-time · Denver, CO — meta rows, tags, CTA button labels</div>
+    </div>
+    <div class="type-role">
+      <div class="meta"><b>Outfit</b>TOC sidebar<br>400 / 500 / 700</div>
+      <div class="specimen-toc">Case-study table-of-contents navigation</div>
+    </div>
+    <div class="type-role">
+      <div class="meta"><b>Arimo</b>Testimonials<br>400 / 600 / 700</div>
+      <div class="specimen-testi">"RS Software gave me the foundation to build a career in fintech."</div>
+    </div>
+    <div class="type-role">
+      <div class="meta"><b>Noto Sans</b>Footer / legal<br>400</div>
+      <div class="specimen-legal">© RS Software. Payments-only. Globally.</div>
+    </div>
+  </section>
+
+  <!-- ============ SIGNATURE HEADLINE PATTERN ============ -->
+  <section class="block" id="headlines">
+    <p class="kicker">03 — Signature move</p>
+    <h2>The giant bold header</h2>
+    <div class="accent-bar"></div>
+    <p class="lede">This is the single most recognizable device on the site: every top-level page (Careers, Contact, Insights, News) opens with one word or short phrase blown up to 140–200px, uppercase, jammed tight with negative letter-spacing, and centered. It's the loudest element on the page — everything else stays quiet by comparison.</p>
+
+    <div class="ghdr-card"><div class="ghdr-light"><h3>CAREERS</h3></div></div>
+    <div class="ghdr-card"><div class="ghdr-dark"><h3>RS INSIGHTS</h3></div></div>
+
+    <pre class="ghdr-spec">font-family: Inter, sans-serif;
+font-weight: 800–900;
+font-size:   clamp(64px, 12vw, 190–200px);
+line-height: 1;
+letter-spacing: -0.03em  (or fixed -4px to -6px at full size);
+text-transform: uppercase;
+text-align: center;
+color: #1a1a1a on white  ·  #ffffff + soft blue text-shadow on dark backgrounds</pre>
+
+    <p class="lede"><strong>Supporting move — the section heading pattern.</strong> One level down, sub-sections use a smaller, quieter three-part header instead: a navy uppercase eyebrow, a navy title with one phrase picked out in brand blue, and a short gradient bar underneath.</p>
+
+    <div class="demo-panel">
+      <p class="sh-eyebrow">Why RS Software</p>
+      <h3 class="sh-title">Where your work powers <em>global payments</em></h3>
+      <div class="sh-bar"></div>
+    </div>
+  </section>
+
+  <!-- ============ LAYOUT ============ -->
+  <section class="block" id="layout">
+    <p class="kicker">04 — Layout &amp; spacing</p>
+    <h2>Structure</h2>
+    <div class="accent-bar"></div>
+    <p class="lede">Core pages sit on a fixed 1440px canvas that scales down as one unit; newer, natively-responsive pages (Contact, News, Investor) use fluid clamp()-based sizing and a centered max-width container instead. Use the fluid approach for anything new.</p>
+
+    <table class="layout-table">
+      <tr><th>Token</th><th>Value</th><th>Used for</th></tr>
+      <tr><td>--rs-canvas-width</td><td>1440px</td><td>Fixed-canvas page width</td></tr>
+      <tr><td>--rs-nav-height</td><td>99px</td><td>Fixed top navigation height</td></tr>
+      <tr><td>--rs-nav-radius</td><td>20px</td><td>Nav bar bottom-corner rounding</td></tr>
+      <tr><td>Section max-width</td><td>1248px</td><td>Centered content container on fluid pages</td></tr>
+      <tr><td>Section padding-inline</td><td>clamp(20px, 6.6vw, 96px)</td><td>Responsive side gutters</td></tr>
+      <tr><td>Section spacing — compact</td><td>48px top/bottom</td><td>Tight sections</td></tr>
+      <tr><td>Section spacing — normal</td><td>80px top/bottom</td><td>Default section rhythm</td></tr>
+      <tr><td>Section spacing — spacious</td><td>112px top/bottom</td><td>Hero-adjacent sections</td></tr>
+      <tr><td>Two-column form grid</td><td>repeat(auto-fit, minmax(240–300px,1fr))</td><td>Contact form, stat bars</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ COMPONENTS ============ -->
+  <section class="block" id="components">
+    <p class="kicker">05 — Components</p>
+    <h2>Radius, elevation &amp; gradients</h2>
+    <div class="accent-bar"></div>
+
+    <p class="grp-label">Border-radius scale</p>
+    <div class="rswrap">
+      <div class="rsw"><div class="rsw-box" style="border-radius:2px"></div><span>2px · checkboxes</span></div>
+      <div class="rsw"><div class="rsw-box" style="border-radius:9px"></div><span>9px · gradient CTA</span></div>
+      <div class="rsw"><div class="rsw-box" style="border-radius:10px"></div><span>10px · primary btn</span></div>
+      <div class="rsw"><div class="rsw-box" style="border-radius:12px"></div><span>12px · dropdown rows</span></div>
+      <div class="rsw"><div class="rsw-box" style="border-radius:16px"></div><span>16px · cards</span></div>
+      <div class="rsw"><div class="rsw-box" style="border-radius:20px"></div><span>20px · nav / stat band</span></div>
+      <div class="rsw"><div class="rsw-box" style="border-radius:24px"></div><span>24px · image tiles</span></div>
+      <div class="rsw"><div class="rsw-box" style="border-radius:999px"></div><span>999px · pills</span></div>
+    </div>
+
+    <p class="grp-label">Shadow scale</p>
+    <div class="shwrap">
+      <div class="shw"><div class="shw-box" style="box-shadow:0px 1px 3px 0px rgba(0,0,0,.1),0px 1px 2px -1px rgba(0,0,0,.1)"></div><span>Card resting — testimonial, form panels</span></div>
+      <div class="shw"><div class="shw-box" style="box-shadow:0 0 0 1px rgba(0,0,0,.05),0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1)"></div><span>Card elevated — job listings, image tiles</span></div>
+      <div class="shw"><div class="shw-box" style="box-shadow:0 20px 48px rgba(0,0,0,.14),0 4px 12px rgba(0,0,0,.08)"></div><span>Dropdown / popover</span></div>
+    </div>
+
+    <p class="grp-label">Gradients</p>
+    <div class="gwrap" id="grp-gradient"></div>
+
+    <p class="grp-label">Buttons</p>
+    <div class="btnrow">
+      <button class="btn-primary">View role</button>
+      <button class="btn-gradient">Talk to expert</button>
+      <button class="btn-outline">Send another message</button>
+      <button class="btn-dashed">Open application</button>
+    </div>
+    <p class="btn-caption">solid #0075b7 (hover #005a8e) · gradient 134deg #0075b7→#14b8a6 · outline 1px #0075b7 · dashed 1px black</p>
+
+    <p class="grp-label">Cards</p>
+    <div class="cardrow">
+      <div class="demo-testi">
+        <p class="q">"The collaborative culture here is unlike anywhere I've worked."</p>
+        <div class="who"><div class="dot"></div><div><p class="name">Rohan Kapoor</p><p class="role">Principal Engineer, RS Software</p></div></div>
+      </div>
+      <div class="demo-job">
+        <div><p class="jt">Payment Systems Engineer</p><p class="jm">Full-time · Denver, CO</p></div>
+        <p class="jd">Build the next generation of payment infrastructure.</p>
+        <button class="jb">View role</button>
+      </div>
+    </div>
+
+    <p class="grp-label">Stat band</p>
+    <div class="demo-statbar">
+      <div class="demo-stat"><div class="val">99.99%</div><div class="lab">Uptime SLA</div><div class="desc">Across mission-critical payment rails</div></div>
+      <div class="demo-stat"><div class="val">30+</div><div class="lab">Markets served</div><div class="desc">Spanning banks, billers and networks</div></div>
+      <div class="demo-stat"><div class="val">1B+</div><div class="lab">Transactions</div><div class="desc">Processed through RS platforms</div></div>
+    </div>
+
+    <p class="grp-label">Navigation</p>
+    <div class="demo-nav">
+      <span class="lg">RS Software</span>
+      <a href="#" class="active">About Us</a>
+      <a href="#">Products ▾</a>
+      <a href="#">News</a>
+      <a href="#">Insights</a>
+      <a href="#">Careers</a>
+      <a href="#">Contact Us</a>
+    </div>
+
+    <p class="grp-label">Footer</p>
+    <div class="demo-footer">
+      <div class="cols">
+        <div><p class="colhead">Contact</p><p class="colitem">Contact Us</p><p class="colitem">Offices</p></div>
+        <div><p class="colhead">Solution</p><p class="colitem">Real-time payments</p><p class="colitem">Fraud &amp; risk</p></div>
+        <div><p class="colhead">Resource</p><p class="colitem">Docs</p><p class="colitem">Insights</p></div>
+        <div><p class="colhead">Company</p><p class="colitem">About</p><p class="colitem">Careers</p></div>
+      </div>
+      <div class="bar"><span>© RS Software. Payments-only. Globally.</span><span>Terms · Privacy · Sitemap</span></div>
+    </div>
+  </section>
+
+  <!-- ============ TOKENS ============ -->
+  <section class="block" id="tokens">
+    <p class="kicker">06 — Raw tokens</p>
+    <h2>CSS custom properties</h2>
+    <div class="accent-bar"></div>
+    <p class="lede">Drop this straight into a new project's root stylesheet to start from the same base.</p>
+    <pre class="tokens"><span class="c">/* Brand colours */</span>
+--rs-blue-primary:    <span class="v">#0075b7</span>;
+--rs-blue-hover:      <span class="v">#005a8e</span>;
+--rs-teal:            <span class="v">#5cc5bf</span>;
+--rs-teal-light:      <span class="v">#e6f7f6</span>;
+--rs-navy:            <span class="v">#1e72bd</span>;   <span class="c">/* footer bg + eyebrows + accent-bar start */</span>
+--rs-navy-footer:     <span class="v">#1e3a5f</span>;
+
+<span class="c">/* Neutral palette */</span>
+--rs-surface:         <span class="v">#ffffff</span>;
+--rs-surface-subtle:  <span class="v">#f9fafb</span>;
+--rs-text-primary:    <span class="v">#0a0a0a</span>;
+--rs-text-secondary:  <span class="v">#374151</span>;
+--rs-text-muted:      <span class="v">#6b7280</span>;
+--rs-border:          <span class="v">#d0d7de</span>;
+--rs-divider:         <span class="v">#e2e8f0</span>;
+
+<span class="c">/* Typography stacks */</span>
+--rs-font-ui:      <span class="v">'Radio Canada Big', sans-serif</span>;
+--rs-font-body:    <span class="v">'Inter', sans-serif</span>;
+--rs-font-display: <span class="v">'Inter', sans-serif</span>;   <span class="c">/* weight 800–900 */</span>
+--rs-font-serif:   <span class="v">'Source Serif 4', Georgia, serif</span>;
+--rs-font-mono:    <span class="v">'Geist Mono', 'Courier New', monospace</span>;
+--rs-font-toc:     <span class="v">'Outfit', sans-serif</span>;
+
+<span class="c">/* Layout */</span>
+--rs-nav-height:   <span class="v">99px</span>;
+--rs-canvas-width: <span class="v">1440px</span>;
+--rs-nav-radius:   <span class="v">20px</span>;</pre>
+  </section>
+
+  <!-- ============ RULES ============ -->
+  <section class="block" id="rules" style="border-bottom:0;">
+    <p class="kicker">07 — Applying it elsewhere</p>
+    <h2>Rules to carry over</h2>
+    <div class="accent-bar"></div>
+    <div class="rules">
+      <div class="rule"><h4>One giant word per page</h4><p>Every top-level page gets exactly one hero headline at 140–200px, uppercase, Inter 800/900, tight negative tracking. Don't repeat the treatment mid-page — it only works because it's rare.</p></div>
+      <div class="rule"><h4>Eyebrow + title + bar for sub-sections</h4><p>Below the hero, use the smaller three-part pattern: navy uppercase eyebrow → navy title with one blue-highlighted phrase → 56×4px navy-to-teal gradient bar.</p></div>
+      <div class="rule"><h4>Mono for meta, serif for description</h4><p>Job/listing cards pair a monospace meta line (location, date, tags) with Source Serif body copy — the contrast between technical label and editorial description is deliberate.</p></div>
+      <div class="rule"><h4>Teal underline = "you are here"</h4><p>The only nav state change is a 2px teal underline plus bold weight. No background pills, no color swaps.</p></div>
+      <div class="rule"><h4>Two CTA styles, not more</h4><p>Solid blue pill for inline actions ("View role"), teal-to-blue gradient pill for the one primary conversion action per page ("Talk to expert", "Submit").</p></div>
+      <div class="rule"><h4>Product colors stay local</h4><p>The purple/pink/teal/orange accent set is scoped to product icon tiles and dropdown hovers only — it never becomes a page background or a heading color.</p></div>
+    </div>
+  </section>
+
+</div>
+
+<p class="foot-note">RS Software — Design System · v3</p>
+
+<script>
+  // ---- data ----
+  const brand = [
+    {n:'Blue primary', h:'#0075b7', u:'CTAs, active links, link text'},
+    {n:'Blue hover',    h:'#005a8e', u:'Primary button hover state'},
+    {n:'Teal',          h:'#5cc5bf', u:'Active nav underline, accents'},
+    {n:'Teal light',    h:'#e6f7f6', u:'Selection highlight, tints'},
+    {n:'Navy',          h:'#1e72bd', u:'Footer background, eyebrows, gradient bar start'},
+    {n:'Navy footer',   h:'#1e3a5f', u:'Alt footer / dark bands'},
+  ];
+  const neutral = [
+    {n:'Surface',        h:'#ffffff', u:'Page / card background'},
+    {n:'Surface subtle', h:'#f9fafb', u:'Section background'},
+    {n:'Text primary',   h:'#0a0a0a', u:'Headings, card titles'},
+    {n:'Hero near-black',h:'#1a1a1a', u:'Giant hero headline color'},
+    {n:'Text secondary', h:'#374151', u:'Body copy, meta text'},
+    {n:'Text muted',     h:'#6b7280', u:'Placeholder / hint text'},
+    {n:'Border',         h:'#d0d7de', u:'Dividers, input outlines'},
+    {n:'Divider',        h:'#e2e8f0', u:'Hairline rules'},
+  ];
+  const product = [
+    {n:'Bill@Edge',    h:'#EA6C00', u:'Product icon tile accent'},
+    {n:'Payabbhi',     h:'#A8397F', u:'Product icon tile accent'},
+    {n:'DigitalEdge',  h:'#0F766E', u:'Product icon tile accent'},
+    {n:'IntelliEdge',  h:'#6D28D9', u:'Product icon tile accent'},
+  ];
+  const gradients = [
+    {n:'Brand wash',    css:'linear-gradient(135deg,#0075b7 0%,#5cc5bf 100%)'},
+    {n:'CTA gradient',  css:'linear-gradient(134deg,#0075b7,#14b8a6)'},
+    {n:'Accent bar',    css:'linear-gradient(90deg,#1e72bd 0%,#14b8a6 100%)'},
+    {n:'Stat band',     css:'linear-gradient(90deg,#e6fbf8 0%,#e7dff7 100%)'},
+    {n:'Success panel', css:'linear-gradient(120deg,#f0f9ff,#ecfdf5)'},
+    {n:'Deep navy',     css:'linear-gradient(130deg,#0c2350 0%,#0b1f3a 100%)'},
+  ];
+
+  function mkSwatch(item){
+    const el = document.createElement('div');
+    el.className = 'sw';
+    el.innerHTML = `<div class="sw-fill" style="background:${item.h}"></div>
+      <div class="sw-body">
+        <p class="sw-name">${item.n}</p>
+        <p class="sw-hex">${item.h}</p>
+        <p class="sw-use">${item.u}</p>
+      </div>`;
+    el.addEventListener('click', () => copy(item.h, el.querySelector('.sw-hex')));
+    return el;
+  }
+  function mkGradient(item){
+    const el = document.createElement('div');
+    el.className = 'gsw';
+    el.innerHTML = `<div class="gsw-fill" style="background:${item.css}"></div>
+      <div class="gsw-body"><p class="gsw-name">${item.n}</p><p class="gsw-code">${item.css}</p></div>`;
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', () => copy(item.css, el.querySelector('.gsw-code')));
+    return el;
+  }
+  function copy(text, labelEl){
+    const original = labelEl.textContent;
+    try{
+      navigator.clipboard.writeText(text).then(() => {
+        labelEl.textContent = 'Copied!';
+        labelEl.classList.add('sw-copied');
+        setTimeout(() => { labelEl.textContent = original; labelEl.classList.remove('sw-copied'); }, 1100);
+      }).catch(() => {});
+    }catch(e){}
+  }
+
+  try{
+    document.getElementById('grp-brand').append(...brand.map(mkSwatch));
+    document.getElementById('grp-neutral').append(...neutral.map(mkSwatch));
+    document.getElementById('grp-product').append(...product.map(mkSwatch));
+    document.getElementById('grp-gradient').append(...gradients.map(mkGradient));
+  }catch(e){ console.error(e); }
+</script>
+
+</body>
+</html>
