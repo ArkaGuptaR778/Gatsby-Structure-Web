@@ -1,0 +1,319 @@
+/* =====================================================================
+   RS SOFTWARE — DESIGN TOKENS  v6.0.0
+   Wave 1 of the migration: additive only. Load this BEFORE rs.css.
+
+     <link rel="stylesheet" href="assets/css/tokens.css">
+     <link rel="stylesheet" href="assets/css/rs.css">
+
+   Three tiers:
+     1 PRIMITIVE  --p-*    the palette. Never referenced by a component.
+     2 SEMANTIC   --rs-*   what components reference. Named by role.
+     3 COMPONENT  --rs-*-* only where a variant must change a value.
+
+   Rule: a component may reference only tier 2 or tier 3.
+   A primitive — or a raw hex — inside a component rule fails review.
+
+   Every value below is taken from the shipped stylesheet, so adding this
+   file changes nothing on screen. The single exception is documented at
+   --p-teal-300.
+   ===================================================================== */
+
+:root{
+
+/* ------------------------------------------------------------------
+   1 · PRIMITIVES
+   ------------------------------------------------------------------ */
+
+  /* Blue — the brand hue */
+  --p-blue-50:#f0f7ff;      /* icon tiles, doc actions, menu hover      */
+  --p-blue-100:#e0f2fe;     /* upload tile, news tag, product hero tint */
+  --p-blue-200:#dbeafe;     /* case-study tag, globe closer             */
+  --p-blue-400:#1e72bd;     /* footer ground, eyebrows                  */
+  --p-blue-500:#0075b7;     /* BRAND                                    */
+  --p-blue-600:#005a8e;     /* hover                                    */
+  --p-blue-700:#004a75;     /* pressed                                  */
+  --p-blue-accent:#2563eb;  /* stat values                              */
+
+  /* Teal — the accent hue */
+  --p-teal-50:#e6f7f6;
+  --p-teal-75:#e1f4f2;
+  --p-teal-100:#dff6f3;
+  --p-teal-200:#a9e1dc;
+  --p-teal-250:#a6e2dd;
+  --p-teal-300:#5DC5BF;     /* BRAND MARK. The stylesheet ships #5cc5bf;
+                               the supplied logo artwork is #5DC5BF.
+                               One digit apart — imperceptible on screen,
+                               and the brand file is authoritative.      */
+  --p-teal-500:#14b8a6;     /* gradient end, accent bar, kickers        */
+  --p-teal-600:#0d9488;     /* accessible gradient end (3.74:1 on white)*/
+  --p-teal-700:#0f766e;     /* teal as text                             */
+
+  /* Ink — dark grounds */
+  --p-ink-700:#1e3a5f;
+  --p-ink-800:#0b2545;
+  --p-ink-900:#0b1f3a;
+  --p-ink-950:#0c2350;      /* deep gradient start                      */
+
+  /* Neutral ramp */
+  --p-neutral-0:#ffffff;
+  --p-neutral-25:#f9fafb;
+  --p-neutral-50:#eef1f4;
+  --p-neutral-75:#eef0f2;   /* search fields, chip counters             */
+  --p-neutral-100:#edeff1;  /* card and panel borders                   */
+  --p-neutral-150:#e5e7eb;
+  --p-neutral-200:#e2e8f0;
+  --p-neutral-250:#d1d5db;
+  --p-neutral-300:#d0d7de;
+  --p-neutral-400:#9ca3af;
+  --p-neutral-500:#6b7280;
+  --p-neutral-550:#64748b;
+  --p-neutral-600:#475569;
+  --p-neutral-650:#3d4349;
+  --p-neutral-700:#374151;
+  --p-neutral-750:#334155;  /* collapse candidate → 700 in a later wave */
+  --p-neutral-800:#1f2937;
+  --p-neutral-900:#0a0a0a;
+  --p-neutral-950:#000000;
+  --p-display-black:#1a1a1a;/* the giant header only                    */
+
+  /* Status */
+  --p-green-50:#dcfce7;
+  --p-green-100:#d1fae5;
+  --p-green-400:#2ea043;    /* 30-years timeline (decorative)           */
+  --p-green-500:#16a34a;
+  --p-green-600:#15803d;
+  --p-emerald-500:#10b981;  /* "up" deltas                              */
+  --p-red-50:#fef2f2;
+  --p-red-500:#dc2626;
+  --p-red-700:#991b1b;
+  --p-amber-50:#fffbeb;
+  --p-amber-400:#fbbf24;
+  --p-amber-700:#c2410c;
+
+  /* Product accents */
+  --p-billedge:#EA6C00;     --p-billedge-tint:#f4b774;
+  --p-payabbhi:#A8397F;     --p-payabbhi-tint:#ecc0e2;
+  --p-digitaledge:#0F766E;  --p-digitaledge-tint:#b5e9e0;
+  --p-intelliedge:#6D28D9;  --p-intelliedge-tint:#e2d4fb;
+
+/* ------------------------------------------------------------------
+   2 · SEMANTIC — what components reference
+   ------------------------------------------------------------------ */
+
+  /* Surfaces */
+  --rs-bg-page:var(--p-neutral-0);
+  --rs-bg-subtle:var(--p-neutral-25);
+  --rs-bg-sunken:var(--p-neutral-75);
+  --rs-bg-well:var(--p-neutral-50);
+  --rs-bg-inverse:var(--p-ink-900);
+  --rs-bg-brand:var(--p-blue-500);
+  --rs-bg-brand-soft:var(--p-blue-50);
+  --rs-bg-accent-soft:color-mix(in srgb,var(--c,var(--p-blue-500)) 10%,#fff);
+
+  /* Text */
+  --rs-fg-default:var(--p-neutral-900);
+  --rs-fg-heading:var(--p-ink-900);
+  --rs-fg-body:var(--p-neutral-700);
+  --rs-fg-body-alt:var(--p-neutral-750);   /* body on tinted grounds    */
+  --rs-fg-muted:var(--p-neutral-500);
+  --rs-fg-muted-alt:var(--p-neutral-550);  /* captions on tints         */
+  --rs-fg-disabled:var(--p-neutral-400);
+  --rs-fg-inverse:var(--p-neutral-0);
+  --rs-fg-brand:var(--p-blue-500);
+  --rs-fg-on-brand:var(--p-neutral-0);
+  --rs-fg-display:var(--p-display-black);
+
+  /* Lines */
+  --rs-border-subtle:var(--p-neutral-100);
+  --rs-border-default:var(--p-neutral-200);
+  --rs-border-strong:var(--p-neutral-300);
+  --rs-border-input:var(--p-neutral-300);
+  --rs-border-focus:var(--p-blue-500);
+
+  /* Actions */
+  --rs-action-primary-bg:var(--p-blue-500);
+  --rs-action-primary-hover:var(--p-blue-600);
+  --rs-action-primary-active:var(--p-blue-700);
+  --rs-action-primary-fg:var(--p-neutral-0);
+  --rs-action-outline-fg:var(--p-blue-500);
+  --rs-action-outline-hover-bg:var(--p-teal-50);
+  --rs-action-quiet-bg:var(--p-neutral-0);      /* white pill on dark   */
+  --rs-action-mint-bg:#7ff0d8;                  /* mint pill on teal    */
+  --rs-action-accent-bg:var(--c,var(--p-blue-500));
+
+  /* Status */
+  --rs-status-success:var(--p-green-400);        /* #2ea043 — accent: bars, meters,
+                                                    icons, timeline, large figures.
+                                                    3.37:1 — not for small text.     */
+  --rs-status-success-text:var(--p-green-600);   /* #15803d — 5.02:1, small text      */
+  --rs-status-success-surface:var(--p-green-50);
+  --rs-status-success-border:var(--p-green-100);
+  --rs-status-positive:var(--p-emerald-500);
+  --rs-status-warning:var(--p-amber-700);        /* #c2410c — 5.18:1 on white        */
+  --rs-status-warning-surface:var(--p-amber-50);
+  --rs-status-danger:var(--p-red-500);           /* #dc2626 — 4.83:1 on white        */
+  --rs-status-danger-text:var(--p-red-700);      /* text inside the pink surface     */
+  --rs-status-danger-strong:var(--p-red-700);
+  --rs-status-danger-surface:var(--p-red-50);
+  --rs-status-info:var(--p-blue-500);
+  --rs-status-info-surface:var(--p-blue-50);
+
+  /* Selection — two markers, and only two.
+     Navigation ("the page/section you are on") = teal underline + bold.
+     Filters ("the filter you applied")         = solid blue pill.      */
+  --rs-select-nav-marker:var(--rs-teal);
+  --rs-select-filter-bg:var(--p-blue-500);
+  --rs-select-filter-fg:var(--p-neutral-0);
+
+  /* Teal band: white text on #5cc5bf is 2.06:1, so copy sits in ink (8.02:1) */
+  --rs-on-teal-fg:var(--p-ink-900);
+
+  /* Data display */
+  --rs-data-value:var(--p-blue-accent);
+  --rs-data-label:var(--p-ink-800);
+
+  /* Gradients */
+  --rs-grad-brand:linear-gradient(135deg,var(--p-blue-500) 0%,#5cc5bf 100%);
+  --rs-grad-cta:linear-gradient(134deg,var(--p-blue-500),var(--p-teal-600));
+      /* ADOPTED: ends on teal-600 so a white label reaches 3.74:1.
+         The old #14b8a6 ending gave 2.49:1 and is retired.            */
+  --rs-grad-cta-legacy:linear-gradient(134deg,var(--p-blue-500),var(--p-teal-500));
+  --rs-grad-bar:linear-gradient(90deg,var(--p-blue-400) 0%,var(--p-teal-500) 100%);
+  --rs-grad-stat:linear-gradient(90deg,#e6fbf8 0%,#e7dff7 100%);
+  --rs-grad-success:linear-gradient(120deg,#f0f9ff,#ecfdf5);
+  --rs-grad-deep:linear-gradient(130deg,var(--p-ink-950) 0%,var(--p-ink-900) 100%);
+
+  /* Page tops — one per page type (see §9.5 of the design system) */
+  --rs-top-home:linear-gradient(180deg,#5cc5bf 0%,#7dd3cd 30%,var(--p-teal-250) 60%,#c9efeb 80%,var(--p-teal-100) 100%);
+  --rs-top-insights:linear-gradient(180deg,#5cc5bf 0%,#9fe0db 40%,var(--p-teal-100) 75%,#fff 100%);
+  --rs-top-article:linear-gradient(180deg,#5cc5bf 0%,var(--p-teal-250) 45%,#e9f8f6 100%);
+  --rs-top-about:linear-gradient(180deg,#bfe9e5 0%,#e8f7f5 55%,#fff 100%);
+  --rs-top-jobs:linear-gradient(180deg,#a8d3ff 0%,#dae6ee 55%,#fff4df 100%);
+  --rs-top-jobdetail:linear-gradient(180deg,#72cdc6 0%,var(--p-teal-200) 22%,var(--p-teal-75) 48%,#f7f9fb 70%);
+  --rs-top-contact:linear-gradient(180deg,#fff 0%,var(--p-teal-75) 14%,var(--p-teal-200) 42%,var(--p-teal-75) 78%,#fff 100%);
+  --rs-top-investor:linear-gradient(120deg,var(--p-ink-800) 0%,var(--p-blue-500) 55%,var(--p-teal-500) 100%);
+  --rs-top-globe:linear-gradient(180deg,#fff 0%,#fff 55%,var(--p-blue-200) 80%,#bfdbfe 100%);
+  --rs-top-pstats:linear-gradient(90deg,#fff 0%,#fff 18%,#e3f5f3 55%,#9fded8 100%);
+
+  /* Elevation */
+  --rs-shadow-rest:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);
+  --rs-shadow-lift:0 0 0 1px rgba(0,0,0,.05),0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);
+  --rs-shadow-pop:0 20px 48px rgba(0,0,0,.14),0 4px 12px rgba(0,0,0,.08);
+  --rs-focus-ring:0 0 0 3px rgba(0,117,183,.15);
+
+  /* Type */
+  --rs-font-ui:"Radio Canada Big",system-ui,sans-serif;
+  --rs-font-body:"Inter",system-ui,sans-serif;
+  --rs-font-display:"Inter",system-ui,sans-serif;
+  --rs-font-serif:"Source Serif 4",Georgia,serif;
+  --rs-font-mono:"JetBrains Mono","Courier New",monospace;
+  --rs-font-toc:"Outfit",sans-serif;
+  --rs-font-testi:"Arimo",Arial,sans-serif;
+  --rs-font-legal:"Noto Sans",sans-serif;
+
+  --rs-text-display:clamp(56px,13vw,200px);
+  --rs-text-h1:clamp(40px,5.6vw,72px);
+  --rs-text-h2:clamp(26px,3.2vw,40px);
+  --rs-text-h3:clamp(22px,2.4vw,28px);
+  --rs-text-statement:clamp(24px,3.1vw,40px);
+  --rs-text-prose:clamp(18px,1.8vw,22px);
+  --rs-text-lede:17px;
+  --rs-text-body:16px;
+  --rs-text-sm:14px;
+  --rs-text-meta:13px;
+  --rs-text-legal:12.5px;
+
+  /* Space — 4px base */
+  --rs-space-1:4px;   --rs-space-2:8px;   --rs-space-3:12px;  --rs-space-4:16px;
+  --rs-space-5:20px;  --rs-space-6:24px;  --rs-space-7:28px;  --rs-space-8:32px;
+  --rs-space-10:40px; --rs-space-12:48px; --rs-space-14:56px; --rs-space-20:80px;
+  --rs-space-28:112px;
+
+  /* Radius */
+  --rs-radius-xs:2px;      /* checkboxes                                   */
+  --rs-radius-sm:6px;      /* compact form dialect, segmented control (was 7px) */
+  --rs-radius-cta:9px;     /* gradient + outline buttons                    */
+  --rs-radius-md:10px;     /* primary button, inputs, icon tiles            */
+  --rs-radius-lg:12px;     /* menu rows, product tiles, alerts (24 raw uses) */
+  --rs-radius-14:14px;     /* sticky nav track, simulation pane             */
+  --rs-radius-xl:16px;     /* cards                                         */
+  --rs-radius-panel:18px;  /* resource cards, library panels                */
+  --rs-radius-2xl:20px;    /* nav bottom corners, stat band, CTA band       */
+  --rs-radius-3xl:24px;    /* image tiles, article hero                     */
+  --rs-radius-pill:999px;  /* chips, filters, badges                        */
+
+  /* Motion */
+  --rs-dur-fast:150ms; --rs-dur-base:180ms; --rs-dur-slow:300ms; --rs-dur-reveal:700ms;
+  --rs-ease-out:cubic-bezier(.2,.8,.2,1);
+  --rs-ease-in-out:cubic-bezier(.4,0,.2,1);
+
+  /* Layers */
+  --rs-z-sticky:40; --rs-z-menu:60; --rs-z-ai:120; --rs-z-header:130; --rs-z-overlay:200;
+
+/* ------------------------------------------------------------------
+   3 · COMPONENT — only where a variant must change a value
+   ------------------------------------------------------------------ */
+
+  --rs-nav-h:84px;                  /* 70px ≤960, set in rs.css        */
+  --rs-container:1248px;
+  --rs-container-narrow:1040px;
+  --rs-container-text:820px;
+  --rs-gutter:clamp(20px,5vw,48px);
+  --rs-section:clamp(56px,7vw,80px);
+  --rs-section-compact:48px;
+  --rs-section-spacious:clamp(72px,9vw,112px);
+  --rs-btn-h-sm:36px; --rs-btn-h:44px; --rs-btn-h-lg:52px;
+  --rs-field-h:48px;
+  --rs-card-pad:28px;
+  --rs-measure:68ch;
+
+/* ------------------------------------------------------------------
+   COMPATIBILITY — the v3 token names keep working.
+   Delete this block once rs.css references the semantic layer directly.
+   ------------------------------------------------------------------ */
+
+  --rs-blue-primary:var(--p-blue-500);
+  --rs-blue-hover:var(--p-blue-600);
+  --rs-teal:#5cc5bf;                /* → var(--p-teal-300) when the brand
+                                       teal correction ships             */
+  --rs-teal-bright:var(--p-teal-500);
+  --rs-teal-light:var(--p-teal-50);
+  --rs-navy:var(--p-blue-400);
+  --rs-navy-deep:var(--p-ink-900);
+  --rs-navy-footer:var(--p-ink-700);
+  --rs-surface:var(--p-neutral-0);
+  --rs-surface-subtle:var(--p-neutral-25);
+  --rs-text-primary:var(--p-neutral-900);
+  --rs-hero-black:var(--p-display-black);
+  --rs-text-secondary:var(--p-neutral-700);
+  --rs-text-muted:var(--p-neutral-500);
+  --rs-border:var(--p-neutral-300);
+  --rs-divider:var(--p-neutral-200);
+  --p-billedge:#EA6C00;
+  --p-payabbhi:#A8397F;
+  --p-digitaledge:#0F766E;
+  --p-intelliedge:#6D28D9;
+  --g-brand:var(--rs-grad-brand);
+  --g-cta:var(--rs-grad-cta);
+  --g-bar:var(--rs-grad-bar);
+  --g-stat:var(--rs-grad-stat);
+  --g-success:var(--rs-grad-success);
+  --g-deep:var(--rs-grad-deep);
+  --r-xs:var(--rs-radius-xs);
+  --r-cta:var(--rs-radius-cta);
+  --r-btn:var(--rs-radius-md);
+  --r-row:var(--rs-radius-lg);   /* 12px — use the token, not the literal */
+  --r-card:var(--rs-radius-xl);
+  --r-band:var(--rs-radius-2xl);
+  --r-tile:var(--rs-radius-3xl);
+  --r-pill:var(--rs-radius-pill);
+  --sh-rest:var(--rs-shadow-rest);
+  --sh-lift:var(--rs-shadow-lift);
+  --sh-pop:var(--rs-shadow-pop);
+  --nav-h:var(--rs-nav-h);
+  --maxw:var(--rs-container);
+  --gutter:var(--rs-gutter);
+  --sp-compact:var(--rs-section-compact);
+  --sp-normal:var(--rs-section);
+  --sp-spacious:var(--rs-section-spacious);
+}
